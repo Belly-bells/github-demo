@@ -38,7 +38,14 @@ jobs:
       - name: Cypress Tests
         run: npx cypress run
       - name: Cypress run
-        continue-on-error: true
+        # continue-on-error: true
+      - name: Get evidence
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
   build:
     needs: test
     runs-on: ubuntu-latest
