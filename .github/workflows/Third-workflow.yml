@@ -37,8 +37,8 @@ jobs:
         run: npm run dev < /dev/null & npx wait-on "http://localhost:5173" --timeout 10s
       - name: Cypress Tests
         run: npx cypress run
-      - name: Cypress run
-        # continue-on-error: true
+      # - name: Cypress run
+      # continue-on-error: true
       - name: Get evidence
         uses: actions/upload-artifact@v7
         if: failure()
