@@ -14,14 +14,15 @@ jobs:
       - name: Get code
         uses: actions/checkout@v6
       - name: Cypress run
-        # continue-on-error: "true"
+        id: cypress-test-run
+        continue-on-error: true
         uses: cypress-io/github-action@v7
         with:
           start: npm run dev
           wait-on: "http://localhost:5173"
       - name: Get evidence
         uses: actions/upload-artifact@v7
-        if: failure()
+        if: steps.cypress-test.outcome == 'failure'
         with:
           name: cypress-screenshots
           path: cypress/screenshots
