@@ -25,3 +25,4 @@ jobs:
         run: |
           echo "Value: ${{ vars.MY_ENV_VAR }}"
           echo "Value: $MY_JOB_VAR"
+          echo "Secret: ${{ secrets.MY_SECRET_VAR }}"
