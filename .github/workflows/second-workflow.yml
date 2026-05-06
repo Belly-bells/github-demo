@@ -6,12 +6,13 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v6
-      - name: Get dependencies
+      - name: Create Cache
         uses: actions/cache@v5
         with:
           path: node_modules
           key: npm-dep-$-{{ hashFiles('**/package-lock.json') }}
-          run: npm ci
+      - name: Get dependencies
+        run: npm ci
       - name: Lint code
         run: npm run lint
       - name: List content
