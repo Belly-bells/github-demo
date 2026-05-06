@@ -22,7 +22,7 @@ jobs:
           wait-on: "http://localhost:5173"
       - name: Get evidence
         uses: actions/upload-artifact@v7
-        if: steps.cypress-test.outcome == 'failure'
+        if: steps.cypress-test-run.outcome == 'failure'
         with:
           name: cypress-screenshots
           path: cypress/screenshots
