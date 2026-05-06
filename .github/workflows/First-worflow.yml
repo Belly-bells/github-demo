@@ -18,7 +18,10 @@ jobs:
         run: ls -al
   second-job:
     runs-on: ubuntu-latest
+    env:
+      MY_JOB_VAR: "This is the end"
     steps:
       - name: Test environment variable
         run: |
-          echo "Value: ${{ vars.MY_ENV_VAR }}"
+        echo "Value: ${{ vars.MY_ENV_VAR }}"
+        echo "Value: $MY_JOB_VAR"
