@@ -7,7 +7,11 @@ jobs:
       - name: Get code
         uses: actions/checkout@v6
       - name: Get dependencies
-        run: npm ci
+        uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: npm-dep-$-{{ hashFiles('**/package-lock.json') }}
+          run: npm ci
       - name: Lint code
         run: npm run lint
       - name: List content
@@ -23,7 +27,11 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
       - name: Get dependencies
-        run: npm ci
+        uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: npm-dep-$-{{ hashFiles('**/package-lock.json') }}
+          run: npm ci
       - name: Build the app
         run: npm run build
   deploy:
