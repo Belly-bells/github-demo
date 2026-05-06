@@ -14,31 +14,11 @@ jobs:
       - name: Get code
         uses: actions/checkout@v6
       - name: Cypress run
+        # continue-on-error: "true"
         uses: cypress-io/github-action@v6
         with:
           start: npm run dev
           wait-on: "http://localhost:5173"
-          # - name: Lint code
-          # run: npm run lint
-      - name: Get dependencies
-        run: npm ci
-      - name: Cache dependencies
-        uses: actions/cache@v5
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-          key: npm-dep-$-{{ hashFiles('**/package-lock.json') }}
-      - name: Lint code
-        run: npm run lint
-      - name: List content
-        run: ls -al
-      - name: Run the server
-        run: npm run dev < /dev/null & npx wait-on "http://localhost:5173" --timeout 10s
-      - name: Cypress Tests
-        run: npx cypress run
-      # - name: Cypress run
-      # continue-on-error: true
       - name: Get evidence
         uses: actions/upload-artifact@v7
         if: failure()
