@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Get dependencies
         uses: actions/cache@v6
         with:
