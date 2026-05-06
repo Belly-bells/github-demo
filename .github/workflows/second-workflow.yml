@@ -6,13 +6,15 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v6
-      - name: Create Cache
-        uses: actions/cache@v5
-        with:
-          path: node_modules
-          key: npm-dep-$-{{ hashFiles('**/package-lock.json') }}
       - name: Get dependencies
         run: npm ci
+      - name: Cache dependencies
+        uses: actions/cache@v5
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: npm-dep-$-{{ hashFiles('**/package-lock.json') }}
       - name: Lint code
         run: npm run lint
       - name: List content
@@ -27,12 +29,17 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v6
-      - name: Get dependencies
-        uses: actions/cache@v5
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
         with:
-          path: node_modules
-          key: npm-dep-$-{{ hashFiles('**/package-lock.json') }}
-          run: npm ci
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: npm-dep-${{ hashFiles('**/package-lock.json') }}
+      - name: Get dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
       - name: Build the app
         run: npm run build
   deploy:
